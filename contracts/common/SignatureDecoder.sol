@@ -30,7 +30,7 @@ contract SignatureDecoder {
     /// @param pos which signature to read
     /// @param signatures concatenated rsv signatures
     function signatureSplit(bytes signatures, uint256 pos)
-        internal
+        public
         pure
         returns (uint8 v, bytes32 r, bytes32 s)
     {

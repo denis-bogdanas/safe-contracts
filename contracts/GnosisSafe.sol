@@ -129,7 +129,7 @@ contract GnosisSafe is MasterCopy, BaseSafe, SignatureDecoder, SecuredTokenTrans
     * @return a bool upon valid or invalid signature with corresponding _data
     */
     function checkSignatures(bytes32 dataHash, bytes data, bytes signatures, bool consumeHash)
-        internal
+        public
         returns (bool)
     {
         // Check that the provided signature data is not too short
