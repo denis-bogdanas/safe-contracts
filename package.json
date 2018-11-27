@@ -1,12 +1,14 @@
 {
   "name": "gnosis-safe",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Ethereum multisig contract",
   "license": "GPL-3.0",
   "main": "index.js",
   "files": [
     "contracts",
-    "test"
+    "test",
+    "zos.json",
+    "zos.*.json"
   ],
   "scripts": {
     "test-norpc": "truffle test",
@@ -27,7 +29,7 @@
   },
   "devDependencies": {
     "@digix/tempo": "^0.2.0",
-    "@gnosis.pm/mock-contract": "2.0.0",
+    "@gnosis.pm/mock-contract": "github:gnosis/mock-contract#sol_0_5_0",
     "bignumber.js": "github:frozeman/bignumber.js-nolookahead",
     "eth-lightwallet": "^3.0.1",
     "ethereumjs-abi": "^0.6.5",
@@ -40,7 +42,7 @@
   },
   "dependencies": {
     "openzeppelin-solidity": "^2.0.0",
-    "solc": "^0.4.24",
+    "solc": "^0.5.0",
     "truffle-hdwallet-provider": "0.0.7-beta.1"
   }
 }

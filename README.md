@@ -24,9 +24,12 @@ export MNEMONIC="<mnemonic>"
 ```
 
 zOS:
+- Make sure that all dependencies use solcjs >0.5.0
+- Add `txParams['from'] = txParams['from'] || web3.currentProvider.getAddress(0)` in `Transactions.js` of the `zos-lib` module
 ```bash
-zos push --network=<network>
-truffle --network=<network> exec scripts/init_contracts.js
+virtualenv env -p python3
+. env/bin/activate
+python ./scripts/deploy_safe.py
 ```
 
 Truffle:
@@ -36,7 +39,7 @@ truffle deploy
 ```
 
 Verify Contracts:
-
+- requires installed solc (>0.5.0)
 ```bash
 virtualenv env -p python3
 . env/bin/activate
@@ -50,7 +53,7 @@ solidity_flattener contracts/modules/SocialRecoveryModule.sol --output build/fla
 solidity_flattener contracts/modules/StateChannelModule.sol --output build/flattened_contracts/StateChannelModule.sol --solc-paths="="
 solidity_flattener contracts/modules/WhitelistModule.sol --output build/flattened_contracts/WhitelistModule.sol --solc-paths="="
 solidity_flattener contracts/proxies/ProxyFactory.sol --output build/flattened_contracts/ProxyFactory.sol
-find build/flattened_contracts -name '*.sol' -exec sed -i '' 's/pragma solidity ^0.4.13;/pragma solidity ^0.4.24;/g' {} \;
+find build/flattened_contracts -name '*.sol' -exec sed -i '' 's/pragma solidity ^0.4.13;/pragma solidity ^0.5.0;/g' {} \;
 ```
 
 Zeppelin OS

@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity ^0.5.0;
 import "../base/Module.sol";
 import "../base/ModuleManager.sol";
 import "../base/OwnerManager.sol";
@@ -10,20 +10,20 @@ import "../common/Enum.sol";
 contract WhitelistModule is Module {
 
     string public constant NAME = "Whitelist Module";
-    string public constant VERSION = "0.0.2";
+    string public constant VERSION = "0.1.0";
 
     // isWhitelisted mapping maps destination address to boolean.
     mapping (address => bool) public isWhitelisted;
 
     /// @dev Setup function sets initial storage of contract.
     /// @param accounts List of whitelisted accounts.
-    function setup(address[] accounts)
+    function setup(address[] memory accounts)
         public
     {
         setManager();
         for (uint256 i = 0; i < accounts.length; i++) {
             address account = accounts[i];
-            require(account != 0, "Invalid account provided");
+            require(account != address(0), "Invalid account provided");
             isWhitelisted[account] = true;
         }
     }
@@ -34,7 +34,7 @@ contract WhitelistModule is Module {
         public
         authorized
     {
-        require(account != 0, "Invalid account provided");
+        require(account != address(0), "Invalid account provided");
         require(!isWhitelisted[account], "Account is already whitelisted");
         isWhitelisted[account] = true;
     }
@@ -54,12 +54,12 @@ contract WhitelistModule is Module {
     /// @param value Not checked.
     /// @param data Not checked.
     /// @return Returns if transaction can be executed.
-    function executeWhitelisted(address to, uint256 value, bytes data)
+    function executeWhitelisted(address to, uint256 value, bytes memory data)
         public
         returns (bool)
     {
         // Only Safe owners are allowed to execute transactions to whitelisted accounts.
-        require(OwnerManager(manager).isOwner(msg.sender), "Method can only be called by an owner");
+        require(OwnerManager(address(manager)).isOwner(msg.sender), "Method can only be called by an owner");
         require(isWhitelisted[to], "Target account is not whitelisted");
         require(manager.execTransactionFromModule(to, value, data, Enum.Operation.Call), "Could not execute transaction");
     }
